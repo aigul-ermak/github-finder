@@ -11,32 +11,32 @@ import User from './components/users/User';
 import GithubState from './context/github/GithubState';
 
 const App = () => {
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
 
   //search github users
 
   //clear users
-  const clearUsers = () => {
-    setUsers([]);
-    setLoading(false);
-  };
+  // const clearUsers = () => {
+  //   setUsers([]);
+  //   setLoading(false);
+  // };
 
   //single user's request
-  const getUser = async (username) => {
-    setLoading(true);
+  // const getUser = async (username) => {
+  //   setLoading(true);
 
-    const res = await axios.get(
-      `https://api.github.com/users/${username}?client_id=$
-        {process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=$
-        {process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    );
-    setUser(res.data);
-    setLoading(false);
-  };
+  //   const res = await axios.get(
+  //     `https://api.github.com/users/${username}?client_id=$
+  //       {process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=$
+  //       {process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+  //   );
+  //   setUser(res.data);
+  //   setLoading(false);
+  // };
 
   //repos request
   const getUserRepos = async (username) => {
@@ -72,12 +72,8 @@ const App = () => {
                 exact
                 render={(props) => (
                   <Fragment>
-                    <Search
-                      clearUsers={clearUsers}
-                      showClear={users.length > 0 ? true : false}
-                      setAlert={showAlert}
-                    />
-                    <Users loading={loading} users={users} />
+                    <Search setAlert={showAlert} />
+                    <Users />
                   </Fragment>
                 )}
               />
@@ -86,14 +82,7 @@ const App = () => {
                 exact
                 path={`/user/:login`}
                 render={(props) => (
-                  <User
-                    {...props}
-                    getUser={getUser}
-                    getUserRepos={getUserRepos}
-                    repos={repos}
-                    user={user}
-                    loading={loading}
-                  />
+                  <User {...props} getUserRepos={getUserRepos} repos={repos} />
                 )}
               />
             </Switch>
